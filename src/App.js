@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./Component/Layout/Header";
+import Meal from "./Component/Meals/Meal";
+import Container from "./Component/UI/Container";
+import Cart from "./Component/Cart/Cart";
+import { useState } from "react";
+import ContextProvider from "./Component/store/CartProvider";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const[isShown,setIsShown]=useState(false);
+
+  const modalShow=()=>{
+    setIsShown(true);
+  }
+  const modalHide=()=>{
+    setIsShown(false);
+  }
+    return (
+      <ContextProvider>
+        <Container>
+          {isShown && <Cart onHide={modalHide}/>}
+          <Header onShow={modalShow}/>
+         <main>
+            <Meal/>
+         </main>
+        </Container>
+      </ContextProvider>
+    );
 }
 
 export default App;
